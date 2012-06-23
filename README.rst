@@ -18,6 +18,7 @@ Install the requirements::
 
 Enable `hstore` in the database::
 
+    psql
     create extension hstore
 
 
