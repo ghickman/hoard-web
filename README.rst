@@ -30,7 +30,7 @@ Usage
 ~~~~~
 
 Access your trove of secrets with the command line `app
-<http://github.com/ghickman/trove-cli`_.
+<http://github.com/ghickman/trove-cli>`_.
 
 API
 ~~~
