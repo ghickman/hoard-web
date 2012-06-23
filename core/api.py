@@ -13,7 +13,8 @@ class ProjectResource(ModelResource):
 
     class Meta:
         allowed_methods = ('get',)
-        fields = ('name', 'secrets')
+        fields = ('name', 'environment', 'secrets')
+        filtering = {'environment': ('exact',)}
         # authentication = BasicAuthentication()
         # authorization = DjangoAuthorization()
         queryset = Project.objects.all()
