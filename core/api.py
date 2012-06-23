@@ -12,9 +12,9 @@ class ProjectResource(ModelResource):
 
     class Meta:
         allowed_methods = ('get',)
-        fields = ('name', 'environment', 'secrets')
+        fields = ('name', 'env', 'secrets')
         filtering = {
-            'environment': ('exact',),
+            'env': ('exact',),
             'name': ('exact',)
         }
         # authentication = BasicAuthentication()
