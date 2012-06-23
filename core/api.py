@@ -1,4 +1,3 @@
-from django.conf.urls.defaults import url
 from tastypie import fields
 from tastypie.api import Api
 from tastypie.authentication import BasicAuthentication
