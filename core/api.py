@@ -1,5 +1,4 @@
 from tastypie import fields
-from tastypie.api import Api
 from tastypie.authentication import BasicAuthentication
 from tastypie.authorization import DjangoAuthorization
 from tastypie.resources import ModelResource
@@ -17,7 +16,7 @@ class ProjectResource(ModelResource):
             'env': ('exact',),
             'name': ('exact',)
         }
-        # authentication = BasicAuthentication()
+        authentication = BasicAuthentication()
         # authorization = DjangoAuthorization()
         queryset = Project.objects.all()
 
