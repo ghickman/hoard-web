@@ -63,7 +63,7 @@ if not os.environ.get('SSL', True):
     MIDDLEWARE_CLASSES.insert(0, 'sslify.middleware.SSLifyMiddleware')
 
 INSTALLED_APPS = (
-    'core',
+    'trove',
 
     'admin_sso',
     'django_extensions',

@@ -4,14 +4,14 @@ from django.contrib import admin
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 from django.views.generic import RedirectView, TemplateView
 
-from core.api import ProjectResource
+from .api import ProjectResource
 
 
 admin.autodiscover()
 project_resource = ProjectResource()
 
 urlpatterns = patterns('',
-    url(r'^$', TemplateView.as_view(template_name='core/home.html'), name='home'),
+    url(r'^$', TemplateView.as_view(template_name='home.html'), name='home'),
     url(r'^api/', include(project_resource.urls)),
 
     url(r'^admin/', include(admin.site.urls)),
