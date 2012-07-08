@@ -79,6 +79,7 @@ INSTALLED_APPS = (
     'django.contrib.admin',
 )
 
+SENTRY_DSN = os.environ.get('SENTRY_DSN')
 LOGGING = {
     'version': 1,
     'disable_existing_loggers': False,
