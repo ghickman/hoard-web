@@ -53,6 +53,7 @@ SITE_ID = 1
 WSGI_APPLICATION = 'trove.wsgi.application'
 
 MIDDLEWARE_CLASSES = (
+    # 'sslify.middleware.SSLifyMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',

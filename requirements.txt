@@ -2,6 +2,7 @@ boto==2.5.2
 django==1.4
 django-admin-sso==0.1.1
 django-hstore==1.1.1
+django-sslify==0.2
 django-storages==1.1.4
 django-tastypie==0.9.11
 dj-database-url==0.2.1
