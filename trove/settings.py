@@ -52,14 +52,15 @@ SECRET_KEY = 'pl#%lb5=ws784n%ioe@+1f*s_1**e#g4f225*pr0&hjll6kw%q'
 SITE_ID = 1
 WSGI_APPLICATION = 'trove.wsgi.application'
 
-MIDDLEWARE_CLASSES = (
-    # 'sslify.middleware.SSLifyMiddleware',
+MIDDLEWARE_CLASSES = [
     'django.middleware.common.CommonMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
-)
+]
+if not os.environ.get('SSL', True):
+    MIDDLEWARE_CLASSES.insert(0, 'sslify.middleware.SSLifyMiddleware')
 
 INSTALLED_APPS = (
     'core',
