@@ -1,13 +1,11 @@
 from django.db import models
-from django_hstore import hstore
+from fields import AESPickledObjectField
 
 
 class Project(models.Model):
     name = models.CharField(max_length=255)
     env = models.CharField(max_length=255)
-    secrets = hstore.DictionaryField(db_index=True)
-
-    objects = hstore.HStoreManager()
+    secrets = AESPickledObjectField()
 
     class Meta:
         unique_together = ('name', 'env')
