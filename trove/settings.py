@@ -14,7 +14,6 @@ MANAGERS = ADMINS
 DATABASES = {
     'default': dj_database_url.config(default='postgres://localhost/trove')
 }
-DATABASES['default']['ENGINE'] = 'django_hstore.postgresql_psycopg2'
 
 TIME_ZONE = 'Europe/London'
 USE_TZ = True
@@ -24,28 +23,17 @@ USE_I18N = True  # Internationalization
 USE_L10N = True  # Locale
 
 # S3 Backend
-DEFAULT_FILE_STORAGE = 'storages.backends.s3boto.S3BotoStorage'
 AWS_ACCESS_KEY_ID = os.environ.get('AWS_ACCESS_KEY_ID')
 AWS_SECRET_ACCESS_KEY = os.environ.get('AWS_SECRET_ACCESS_KEY')
 AWS_STORAGE_BUCKET_NAME = os.environ.get('AWS_STORAGE_BUCKET_NAME')
+STATICFILES_STORAGE = 'storages.backends.s3boto.S3BotoStorage'
 
 # Static
 MEDIA_ROOT = 'client_media'
 MEDIA_URL = '/media/'
 STATIC_ROOT = 'static_media'
 STATIC_URL = 'http://{0}.s3.amazonaws.com/'.format(AWS_STORAGE_BUCKET_NAME)
-STATICFILES_DIRS = (os.path.join(DIRNAME, 'static'),)
-STATICFILES_FINDERS = (
-    'django.contrib.staticfiles.finders.FileSystemFinder',
-    'django.contrib.staticfiles.finders.AppDirectoriesFinder',
-)
-STATICFILES_STORAGE = 'storages.backends.s3boto.S3BotoStorage'
-
 TEMPLATE_DIRS = (os.path.join(DIRNAME, 'templates'))
-TEMPLATE_LOADERS = (
-    'django.template.loaders.filesystem.Loader',
-    'django.template.loaders.app_directories.Loader',
-)
 
 ROOT_URLCONF = 'trove.urls'
 SECRET_KEY = 'pl#%lb5=ws784n%ioe@+1f*s_1**e#g4f225*pr0&hjll6kw%q'
@@ -67,7 +55,6 @@ INSTALLED_APPS = (
 
     'admin_sso',
     'django_extensions',
-    # 'django_simple_aes_field',
     'storages',
     'tastypie',
 
@@ -81,6 +68,7 @@ INSTALLED_APPS = (
 )
 
 SENTRY_DSN = os.environ.get('SENTRY_DSN')
+SENTRY_TEST = DEBUG
 LOGGING = {
     'version': 1,
     'disable_existing_loggers': False,
