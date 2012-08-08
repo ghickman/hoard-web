@@ -55,6 +55,7 @@ INSTALLED_APPS = (
 
     'admin_sso',
     'django_extensions',
+    'raven.contrib.django',
     'storages',
     'tastypie',
 
