@@ -6,6 +6,7 @@ from django.utils import timezone
 from .fields import AESPickledObjectField
 
 
+# should env be a model here?
 class Project(models.Model):
     name = models.CharField(max_length=255)
     env = models.CharField(max_length=255)

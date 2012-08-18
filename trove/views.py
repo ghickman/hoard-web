@@ -1,20 +1,21 @@
-from djangorestframework.mixins import ReadModelMixin
+from djangorestframework.mixins import CreateModelMixin, ReadModelMixin
 from djangorestframework.resources import ModelResource
 
 from .auth import AuthMixin
 from .models import Project
 
 
+# create project resource that doesn't let you change the project/env
 class ProjectResource(ModelResource):
     model = Project
 
-    fields = ['secrets']
+    # fields = ['secrets']
 
-    def secrets(self, instance):
-        return instance.secrets
+    # def secrets(self, instance):
+    #     return instance.secrets
 
 
-class Detail(AuthMixin, ReadModelMixin):
+class ProjectView(AuthMixin, CreateModelMixin, ReadModelMixin):
     resource = ProjectResource
 
     def get_instance(self, **kwargs):
