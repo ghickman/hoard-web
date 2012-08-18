@@ -3,9 +3,10 @@ import re
 from django import forms
 from django.contrib.auth import authenticate
 from djangorestframework.authentication import BaseAuthentication
+from djangorestframework.permissions import IsAuthenticated
 from djangorestframework.response import ErrorResponse
 from djangorestframework.status import HTTP_400_BAD_REQUEST
-from djangorestframework.views import View
+from djangorestframework.views import ModelView, View
 
 from .models import Access
 
@@ -35,6 +36,11 @@ class APIKeyAuthentication(BaseAuthentication):
         except Access.DoesNotExist:
             return None
         return access
+
+
+class AuthMixin(ModelView):
+    authentication = [APIKeyAuthentication]
+    permissions = [IsAuthenticated]
 
 
 class GetAccessToken(View):

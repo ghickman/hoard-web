@@ -1,9 +1,7 @@
 from djangorestframework.mixins import ReadModelMixin
-from djangorestframework.permissions import IsAuthenticated
 from djangorestframework.resources import ModelResource
-from djangorestframework.views import ModelView
 
-from .auth import APIKeyAuthentication
+from .auth import AuthMixin
 from .models import Project
 
 
@@ -16,9 +14,7 @@ class ProjectResource(ModelResource):
         return instance.secrets
 
 
-class Detail(ModelView, ReadModelMixin):
-    authentication = [APIKeyAuthentication]
-    permissions = [IsAuthenticated]
+class Detail(AuthMixin, ReadModelMixin):
     resource = ProjectResource
 
     def get_instance(self, **kwargs):
