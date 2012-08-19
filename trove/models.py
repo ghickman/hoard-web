@@ -6,14 +6,23 @@ from django.utils import timezone
 from .fields import AESPickledObjectField
 
 
-# should env be a model here?
+class Env(models.Model):
+    name = models.CharField(max_length=255, unique=True)
+
+    class Meta:
+        ordering = ('name',)
+
+    def __unicode__(self):
+        return self.name
+
+
 class Project(models.Model):
     name = models.CharField(max_length=255)
-    env = models.CharField(max_length=255)
+    env = models.ForeignKey('Env')
     secrets = AESPickledObjectField()
 
     class Meta:
-        unique_together = ('name', 'env')
+        ordering = ('name',)
 
     def __unicode__(self):
         return self.name

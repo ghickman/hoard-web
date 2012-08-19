@@ -1,12 +1,20 @@
-from djangorestframework.mixins import CreateModelMixin, ReadModelMixin
+from django.http import HttpResponseNotFound
+from djangorestframework.mixins import CreateModelMixin, ListModelMixin
 from djangorestframework.resources import ModelResource
 
 from .auth import AuthMixin
-from .models import Project
+from .forms import ProjectForm
+from .models import Env, Project
 
 
-# create project resource that doesn't let you change the project/env
+class EnvResource(ModelResource):
+    model = Env
+
+    fields = ['id', 'name']
+
+
 class ProjectResource(ModelResource):
+    # form_class = ProjectForm
     model = Project
 
     # fields = ['secrets']
@@ -15,9 +23,20 @@ class ProjectResource(ModelResource):
     #     return instance.secrets
 
 
-class ProjectView(AuthMixin, CreateModelMixin, ReadModelMixin):
+class EnvView(AuthMixin, CreateModelMixin, ListModelMixin):
+    resource = EnvResource
+
+
+class ProjectView(AuthMixin, CreateModelMixin, ListModelMixin):
     resource = ProjectResource
 
-    def get_instance(self, **kwargs):
-        return Project.objects.get(name=self.kwargs['project'], env=self.kwargs['env'])
+    def get(self, request, *args, **kwargs):
+        if not 'env' in request.GET:
+            return super(ProjectView, self).get(request, *args, **kwargs)
+
+        filter_kwargs = {'name': kwargs['name'], 'env__name': request.GET['env']}
+        try:
+            return self.resource.model.objects.get(**filter_kwargs)
+        except self.resource.model.DoesNotExist:
+            return HttpResponseNotFound()
 

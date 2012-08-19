@@ -8,12 +8,8 @@ from djangorestframework.response import ErrorResponse
 from djangorestframework.status import HTTP_400_BAD_REQUEST
 from djangorestframework.views import ModelView, View
 
+from .forms import UserForm
 from .models import Access
-
-
-class UserForm(forms.Form):
-    username = forms.CharField(max_length=30)
-    password = forms.CharField(widget=forms.PasswordInput)
 
 
 class APIKeyAuthentication(BaseAuthentication):
