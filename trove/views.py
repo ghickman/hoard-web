@@ -1,5 +1,4 @@
-from django.http import HttpResponseNotFound
-from djangorestframework.mixins import CreateModelMixin, ListModelMixin
+from djangorestframework.mixins import CreateModelMixin, ListModelMixin, UpdateModelMixin
 from djangorestframework.resources import ModelResource
 
 from .auth import AuthMixin
@@ -27,16 +26,12 @@ class EnvView(AuthMixin, CreateModelMixin, ListModelMixin):
     resource = EnvResource
 
 
-class ProjectView(AuthMixin, CreateModelMixin, ListModelMixin):
+class ProjectView(AuthMixin, CreateModelMixin, UpdateModelMixin, ListModelMixin):
     resource = ProjectResource
 
-    def get(self, request, *args, **kwargs):
-        if not 'env' in request.GET:
-            return super(ProjectView, self).get(request, *args, **kwargs)
-
-        filter_kwargs = {'name': kwargs['name'], 'env__name': request.GET['env']}
-        try:
-            return self.resource.model.objects.get(**filter_kwargs)
-        except self.resource.model.DoesNotExist:
-            return HttpResponseNotFound()
+    def get_query_kwargs(self, *args, **kwargs):
+        query_kwargs = super(ProjectView, self).get_query_kwargs(*args, **kwargs)
+        if 'env' in self.request.GET:
+            query_kwargs['env__name'] = self.request.GET['env']
+        return query_kwargs
 
