@@ -1,6 +1,6 @@
 import json
 
-from djangorestframework.mixins import CreateModelMixin, ListModelMixin, UpdateModelMixin
+from djangorestframework.mixins import CreateModelMixin, ListModelMixin, ReadModelMixin, UpdateModelMixin
 from djangorestframework.resources import ModelResource
 from djangorestframework.response import ErrorResponse
 
@@ -27,14 +27,25 @@ class EnvView(AuthMixin, CreateModelMixin, ListModelMixin):
     resource = EnvResource
 
 
-class ProjectView(AuthMixin, CreateModelMixin, UpdateModelMixin, ListModelMixin):
+class ProjectBase(AuthMixin):
     resource = ProjectResource
 
     def get_query_kwargs(self, *args, **kwargs):
-        query_kwargs = super(ProjectView, self).get_query_kwargs(*args, **kwargs)
+        query_kwargs = super(ProjectBase, self).get_query_kwargs(*args, **kwargs)
         if 'env' in self.request.GET:
             query_kwargs['env__name'] = self.request.GET['env']
         return query_kwargs
+
+
+class ProjectDetail(ProjectBase, ReadModelMixin):
+    pass
+
+
+class ProjectView(ProjectBase, CreateModelMixin, UpdateModelMixin, ListModelMixin):
+    def get(self, request, *args, **kwargs):
+        if 'env' in request.GET:
+            return ProjectDetail.get(ProjectDetail(), request, *args, **kwargs)
+        return super(ProjectView, self).get(request, *args, **kwargs)
 
     def put(self, request, *args, **kwargs):
         """
