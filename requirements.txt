@@ -1,14 +1,13 @@
 boto==2.5.2
-django==1.4
+django==1.4.3
 djangorestframework==0.3.3
 django-admin-sso==0.1.1
 django-extensions==0.9
 django-picklefield==0.2.1
 django-sslify==0.2
 django-storages==1.1.4
-django-tastypie==0.9.11
 dj-database-url==0.2.1
-gunicorn==0.14.5
+gunicorn==0.17.2
 psycopg2==2.4.5
-raven==2.0.3
+raven==3.1.10
 simpleaes==0.2
