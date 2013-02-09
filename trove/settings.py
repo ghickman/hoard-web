@@ -25,6 +25,8 @@ USE_L10N = True  # Locale
 # S3 Backend
 AWS_ACCESS_KEY_ID = os.environ.get('AWS_ACCESS_KEY_ID')
 AWS_SECRET_ACCESS_KEY = os.environ.get('AWS_SECRET_ACCESS_KEY')
+AWS_PRELOAD_METADATA = True
+AWS_QUERYSTRING_AUTH = False
 AWS_STORAGE_BUCKET_NAME = os.environ.get('AWS_STORAGE_BUCKET_NAME')
 STATICFILES_STORAGE = 'storages.backends.s3boto.S3BotoStorage'
 
@@ -55,8 +57,9 @@ INSTALLED_APPS = (
 
     'admin_sso',
     'django_extensions',
-    'djangorestframework',
     'raven.contrib.django',
+    'rest_framework',
+    'rest_framework.authtoken',
     'storages',
 
     'django.contrib.auth',
@@ -69,27 +72,42 @@ INSTALLED_APPS = (
 )
 
 SENTRY_DSN = os.environ.get('SENTRY_DSN')
-SENTRY_TEST = DEBUG
 LOGGING = {
     'version': 1,
     'disable_existing_loggers': False,
+    'formatters': {
+         'console': {
+             'format': '[%(asctime)s][%(levelname)s] %(name)s %(filename)s:%(funcName)s:%(lineno)d | %(message)s',
+             'datefmt': '%H:%M:%S',
+         },
+     },
     'filters': {
         'require_debug_false': {
             '()': 'django.utils.log.RequireDebugFalse'
         }
     },
     'handlers': {
-        'mail_admins': {
-            'level': 'ERROR',
+        'sentry': {
+            'level': 'DEBUG',
             'filters': ['require_debug_false'],
-            'class': 'django.utils.log.AdminEmailHandler'
-        }
+            'class': 'raven.contrib.django.handlers.SentryHandler'
+        },
+        'console': {
+            'level': 'DEBUG',
+            'class': 'logging.StreamHandler',
+            'formatter': 'console',
+        },
     },
     'loggers': {
         'django.request': {
-            'handlers': ['mail_admins'],
+            'handlers': ['sentry', 'console'],
             'level': 'ERROR',
             'propagate': True,
+        },
+        'sentry.errors': {
+            'handlers': ['console'],
+            'level': 'ERROR',
+            'propogate': True,
         },
     }
 }
