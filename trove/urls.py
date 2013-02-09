@@ -4,7 +4,6 @@ from django.contrib import admin
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 from django.views.generic import RedirectView, TemplateView
 
-from .auth import GetAccessToken
 from .views import EnvView, ProjectView
 
 
@@ -12,7 +11,7 @@ admin.autodiscover()
 
 urlpatterns = patterns('',
     url(r'^$', TemplateView.as_view(template_name='home.html')),
-    url(r'^login/$', GetAccessToken.as_view()),
+    url(r'^login/', 'rest_framework.authtoken.views.obtain_auth_token'),
     url(r'^api/envs/$', EnvView.as_view()),
     url(r'^api/projects/$', ProjectView.as_view()),
     url(r'^api/projects/(?P<name>[\w-]+)/$', ProjectView.as_view()),
