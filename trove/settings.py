@@ -28,13 +28,14 @@ AWS_SECRET_ACCESS_KEY = os.environ.get('AWS_SECRET_ACCESS_KEY')
 AWS_PRELOAD_METADATA = True
 AWS_QUERYSTRING_AUTH = False
 AWS_STORAGE_BUCKET_NAME = os.environ.get('AWS_STORAGE_BUCKET_NAME')
-STATICFILES_STORAGE = 'storages.backends.s3boto.S3BotoStorage'
+STATICFILES_STORAGE = os.environ.get('STATICFILES_STORAGE', 'storages.backends.s3boto.S3BotoStorage')
+S3_URL = 'http://{0}.s3.amazonaws.com/'.format(AWS_STORAGE_BUCKET_NAME)
 
 # Static
 MEDIA_ROOT = 'client_media'
 MEDIA_URL = '/media/'
 STATIC_ROOT = 'static_media'
-STATIC_URL = 'http://{0}.s3.amazonaws.com/'.format(AWS_STORAGE_BUCKET_NAME)
+STATIC_URL = os.environ.get('STATIC_URL', S3_URL)
 TEMPLATE_DIRS = (os.path.join(DIRNAME, 'templates'))
 
 ROOT_URLCONF = 'trove.urls'
@@ -110,5 +111,15 @@ LOGGING = {
             'propogate': True,
         },
     }
+}
+
+# Rest Framework
+REST_FRAMEWORK = {
+    'DEFAULT_PERMISSION_CLASSES': (
+        'rest_framework.permissions.IsAuthenticated',
+    ),
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework.authentication.TokenAuthentication',
+    )
 }
 
