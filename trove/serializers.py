@@ -1,5 +1,5 @@
 from rest_framework.relations import HyperlinkedIdentityField
-from rest_framework.serializers import HyperlinkedModelSerializer
+from rest_framework.serializers import HyperlinkedModelSerializer, SerializerMethodField
 
 from .fields import DeploymentURLField, PairsField, SlugHyperlinkedRelatedField
 from .models import Deployment, Env, Project
@@ -27,10 +27,12 @@ class EnvSerializer(HyperlinkedModelSerializer):
 
 class ProjectSerializer(HyperlinkedModelSerializer):
     url = HyperlinkedIdentityField(slug_field='name')
-    # TODO: List envs, w/ urls
-    # envs = ManyHyperlinkedRelatedField(view_name='env-detail')
+    envs = SerializerMethodField('get_envs')
 
     class Meta:
-        fields = ('url', 'name')#, 'envs')
+        fields = ('url', 'name', 'envs')
         model = Project
+
+    def get_envs(self, obj):
+        return Env.objects.filter(deployment__project=obj).values_list('name', flat=True)
 
