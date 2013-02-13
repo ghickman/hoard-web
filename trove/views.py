@@ -1,8 +1,8 @@
 from django.http import Http404
 from rest_framework.generics import ListAPIView, RetrieveAPIView
 
-from .models import Deployment, Env, Project
-from .serializers import DeploymentSerializer, EnvSerializer, ProjectSerializer
+from .models import Pair, Env, Project
+from .serializers import PairSerializer, EnvSerializer, ProjectSerializer
 
 
 class SlugFieldMixin(object):
@@ -10,14 +10,14 @@ class SlugFieldMixin(object):
     slug_url_kwarg = 'name'
 
 
-class DeploymentDetail(RetrieveAPIView):
-    model = Deployment
-    serializer_class = DeploymentSerializer
+class PairList(ListAPIView):
+    model = Pair
+    serializer_class = PairSerializer
 
     def get_object(self):
         kwargs = {
-            'project__name': self.kwargs['name'],
-            'env__name': self.kwargs['env_name'],
+            'deployment__project__name': self.kwargs['name'],
+            'deployment__env__name': self.kwargs['env_name'],
         }
         try:
             return self.model.objects.get(**kwargs)
@@ -43,6 +43,4 @@ class ProjectDetail(SlugFieldMixin, RetrieveAPIView):
 class ProjectList(ListAPIView):
     model = Project
     serializer_class = ProjectSerializer
-
-    # TODO: Add envs - a list of envs with deployments on project
 

@@ -1,19 +1,7 @@
 from rest_framework.relations import HyperlinkedIdentityField
-from rest_framework.serializers import HyperlinkedModelSerializer, SerializerMethodField
+from rest_framework.serializers import ModelSerializer, HyperlinkedModelSerializer, SerializerMethodField
 
-from .fields import DeploymentURLField, PairsField, SlugHyperlinkedRelatedField
-from .models import Deployment, Env, Project
-
-
-class DeploymentSerializer(HyperlinkedModelSerializer):
-    url = DeploymentURLField()
-    env = SlugHyperlinkedRelatedField(view_name='env-detail')
-    project = SlugHyperlinkedRelatedField(view_name='project-detail')
-    pairs = PairsField()
-
-    class Meta:
-        fields = ('url', 'env', 'project', 'pairs')
-        model = Deployment
+from .models import Env, Pair, Project
 
 
 class EnvSerializer(HyperlinkedModelSerializer):
@@ -23,6 +11,15 @@ class EnvSerializer(HyperlinkedModelSerializer):
     class Meta:
         fields = ('url', 'name')
         model = Env
+
+
+class PairSerializer(ModelSerializer):
+    class Meta:
+        fields = ('key', 'value')
+        model = Pair
+
+    def convert_object(self, obj):
+        return {obj.key: obj.value}
 
 
 class ProjectSerializer(HyperlinkedModelSerializer):
