@@ -1,7 +1,7 @@
 from rest_framework.relations import HyperlinkedIdentityField
 from rest_framework.serializers import ModelSerializer, HyperlinkedModelSerializer, SerializerMethodField
 
-from .models import Env, Pair, Project
+from .models import Deployment, Env, Pair, Project
 
 
 class EnvSerializer(HyperlinkedModelSerializer):
@@ -15,11 +15,24 @@ class EnvSerializer(HyperlinkedModelSerializer):
 
 class PairSerializer(ModelSerializer):
     class Meta:
-        fields = ('key', 'value')
-        model = Pair
+        model = Deployment
 
     def convert_object(self, obj):
-        return {obj.key: obj.value}
+        return {pair.key: pair.value for pair in obj.pairs.all()}
+
+    def from_native(self, data, files):
+        for k, v in data.items():
+            pair, created = Pair.objects.get_or_create(
+                deployment=self.object,
+                key=k,
+                defaults={'value': v},
+            )
+            if created:
+                self.object.pairs.add(pair)
+            else:
+                pair.value = v
+                pair.save()
+        return self.object
 
 
 class ProjectSerializer(HyperlinkedModelSerializer):
