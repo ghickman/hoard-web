@@ -32,7 +32,7 @@ class Pair(models.Model):
 
     class Meta:
         ordering = ('key',)
-        unique_together = ('key', 'value')
+        unique_together = ('key', 'value', 'deployment')
 
     def __unicode__(self):
         return '{0}={1}'.format(self.key, self.value)
