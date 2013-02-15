@@ -11,7 +11,7 @@ class SlugFieldMixin(object):
     slug_url_kwarg = 'name'
 
 
-class PairList(UpdateModelMixin, RetrieveAPIView):
+class DeploymentDetail(UpdateModelMixin, RetrieveAPIView):
     model = Deployment
     serializer_class = PairSerializer
 

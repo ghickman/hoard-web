@@ -18,7 +18,7 @@ urlpatterns = patterns('',
 
     url(r'^projects/?$', views.ProjectList.as_view(), name='project-list'),
     url(r'^projects/(?P<name>[\w-]+)/?$', views.ProjectDetail.as_view(), name='project-detail'),
-    url(r'^projects/(?P<name>[\w-]+)/envs/(?P<env_name>[\w-]+)/?$', views.PairList.as_view(), name='pair-list'),
+    url(r'^projects/(?P<name>[\w-]+)/envs/(?P<env_name>[\w-]+)/?$', views.DeploymentDetail.as_view(), name='deployment-detail'),
 
     url(r'^admin/', include(admin.site.urls)),
     url(r'^favicon.ico$', RedirectView.as_view(url=settings.STATIC_URL + 'favicon.ico')),
