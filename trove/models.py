@@ -23,6 +23,11 @@ class Env(models.Model):
     def __unicode__(self):
         return self.name
 
+    @property
+    def projects(self):
+        kwargs = {'deployment__env': self}
+        return Project.objects.filter(**kwargs).values_list('name', flat=True)
+
 
 class Pair(models.Model):
     deployment = models.ForeignKey('Deployment', related_name='pairs')
@@ -46,4 +51,9 @@ class Project(models.Model):
 
     def __unicode__(self):
         return self.name
+
+    @property
+    def envs(self):
+        kwargs = {'deployment__project': self}
+        return Env.objects.filter(**kwargs).values_list('name', flat=True)
 
