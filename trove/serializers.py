@@ -41,5 +41,5 @@ class ProjectSerializer(ModelSerializer):
         model = Project
 
     def get_envs(self, obj):
-        return Env.objects.filter(deployment__project=obj).values_list('name', flat=True)
+        return obj.envs
 
