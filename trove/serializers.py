@@ -24,7 +24,7 @@ class PairSerializer(ModelSerializer):
         for k, v in data.items():
             pair, created = Pair.objects.get_or_create(
                 deployment=self.object,
-                key=k,
+                key=k.upper(),
                 defaults={'value': v},
             )
             if created:
