@@ -1,10 +1,12 @@
 from django.contrib import admin
 
+from .forms import PairForm
 from .models import Deployment, Env, Pair, Project
 
 
 class PairInline(admin.TabularInline):
     extra = 1
+    form = PairForm
     model = Pair
 
 
