@@ -4,11 +4,14 @@ from .models import Deployment, Env, Pair, Project
 
 
 class EnvSerializer(ModelSerializer):
-    # TODO: List projects, w/ urls
+    projects = SerializerMethodField('get_projects')
 
     class Meta:
-        fields = ('name', )
+        fields = ('name', 'projects')
         model = Env
+
+    def get_projects(self, obj):
+        return obj.projects
 
 
 class PairSerializer(ModelSerializer):
