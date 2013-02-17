@@ -9,5 +9,6 @@ django-storages==1.1.4
 dj-database-url==0.2.1
 gunicorn==0.17.2
 psycopg2==2.4.5
+pylibmc==1.2.3
 raven==3.1.10
 simpleaes==0.2

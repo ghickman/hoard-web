@@ -1,6 +1,7 @@
 # Django settings for trove project.
 import os
 
+import django_cache_url
 import dj_database_url
 
 
@@ -14,6 +15,7 @@ MANAGERS = ADMINS
 DATABASES = {
     'default': dj_database_url.config(default='postgres://localhost/trove')
 }
+CACHES = {'default': django_cache_url.config('django_pylibmc://')}
 
 TIME_ZONE = 'Europe/London'
 USE_TZ = True
