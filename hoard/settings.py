@@ -1,4 +1,4 @@
-# Django settings for trove project.
+# Django settings for hoard project.
 import os
 
 import django_cache_url
@@ -13,7 +13,7 @@ ADMINS = (('George Hickman', 'george@ghickman.co.uk'),)
 MANAGERS = ADMINS
 
 DATABASES = {
-    'default': dj_database_url.config(default='postgres://localhost/trove')
+    'default': dj_database_url.config(default='postgres://localhost/hoard')
 }
 CACHES = {'default': django_cache_url.config('django_pylibmc://')}
 
@@ -40,10 +40,10 @@ STATIC_ROOT = 'static_media'
 STATIC_URL = os.environ.get('STATIC_URL', S3_URL)
 TEMPLATE_DIRS = (os.path.join(DIRNAME, 'templates'))
 
-ROOT_URLCONF = 'trove.urls'
+ROOT_URLCONF = 'hoard.urls'
 SECRET_KEY = 'pl#%lb5=ws784n%ioe@+1f*s_1**e#g4f225*pr0&hjll6kw%q'
 SITE_ID = 1
-WSGI_APPLICATION = 'trove.wsgi.application'
+WSGI_APPLICATION = 'hoard.wsgi.application'
 
 MIDDLEWARE_CLASSES = (
     'sslify.middleware.SSLifyMiddleware',
@@ -55,7 +55,7 @@ MIDDLEWARE_CLASSES = (
 )
 
 INSTALLED_APPS = (
-    'trove',
+    'hoard',
 
     'admin_sso',
     'django_extensions',

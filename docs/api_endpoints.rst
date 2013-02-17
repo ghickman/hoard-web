@@ -1,4 +1,4 @@
-Trove API Enpoints
+Hoard API Enpoints
 ==================
 
 
