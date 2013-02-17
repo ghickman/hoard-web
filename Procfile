@@ -1,1 +1,1 @@
-web: gunicorn trove.wsgi
+web: gunicorn hoard.wsgi
