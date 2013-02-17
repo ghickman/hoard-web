@@ -9,4 +9,4 @@ deploy:
 	git push heroku master
 
 static:
-	STATICFILES_STORAGE='storages.backends.s3boto.S3BotoStorage' python manage.py collectstatic -i *.sass --noinput " "
+	STATICFILES_STORAGE='storages.backends.s3boto.S3BotoStorage' python manage.py collectstatic --noinput
