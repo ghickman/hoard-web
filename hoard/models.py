@@ -8,7 +8,7 @@ class Deployment(models.Model):
     class Meta:
         unique_together = ('env', 'project')
 
-    def __unicode__(self):
+    def __str__(self):
         return '{0}: {1}'.format(self.project, self.env)
 
 
@@ -18,7 +18,7 @@ class Env(models.Model):
     class Meta:
         ordering = ('name',)
 
-    def __unicode__(self):
+    def __str__(self):
         return self.name
 
     @property
@@ -37,7 +37,7 @@ class Pair(models.Model):
         ordering = ('key',)
         unique_together = ('key', 'value', 'deployment')
 
-    def __unicode__(self):
+    def __str__(self):
         return '{0}={1}'.format(self.key, self.value)
 
 
@@ -47,7 +47,7 @@ class Project(models.Model):
     class Meta:
         ordering = ('name',)
 
-    def __unicode__(self):
+    def __str__(self):
         return self.name
 
     @property
