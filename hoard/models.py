@@ -1,7 +1,5 @@
 from django.db import models
 
-from .fields import AESPickledObjectField
-
 
 class Deployment(models.Model):
     env = models.ForeignKey('Env')
