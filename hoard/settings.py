@@ -30,7 +30,6 @@ USE_L10N = True  # Locale
 # Static
 MEDIA_ROOT = 'client_media'
 MEDIA_URL = '/media/'
-STATICFILES_DIR = os.path.join(BASE_DIR, 'static')
 STATIC_ROOT = 'static_media'
 STATIC_URL = '/static/'
 TEMPLATE_DIRS = (os.path.join(DIRNAME, 'templates'))
