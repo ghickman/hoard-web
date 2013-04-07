@@ -10,6 +10,8 @@ DIRNAME = os.path.abspath(os.path.dirname(__file__))
 
 DEBUG = bool(os.environ.get('DEBUG', False))
 
+ALLOWED_HOSTS = ['*']
+
 ADMINS = (('George Hickman', 'george@ghickman.co.uk'),)
 MANAGERS = ADMINS
 
