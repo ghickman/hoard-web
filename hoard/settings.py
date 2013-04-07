@@ -5,6 +5,7 @@ import django_cache_url
 import dj_database_url
 
 
+BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 DIRNAME = os.path.abspath(os.path.dirname(__file__))
 
 DEBUG = bool(os.environ.get('DEBUG', False))
@@ -24,20 +25,12 @@ LANGUAGE_CODE = 'en-gb'
 USE_I18N = True  # Internationalization
 USE_L10N = True  # Locale
 
-# S3 Backend
-AWS_ACCESS_KEY_ID = os.environ.get('AWS_ACCESS_KEY_ID')
-AWS_SECRET_ACCESS_KEY = os.environ.get('AWS_SECRET_ACCESS_KEY')
-AWS_PRELOAD_METADATA = True
-AWS_QUERYSTRING_AUTH = False
-AWS_STORAGE_BUCKET_NAME = os.environ.get('AWS_STORAGE_BUCKET_NAME')
-STATICFILES_STORAGE = os.environ.get('STATICFILES_STORAGE', 'storages.backends.s3boto.S3BotoStorage')
-S3_URL = 'http://{0}.s3.amazonaws.com/'.format(AWS_STORAGE_BUCKET_NAME)
-
 # Static
 MEDIA_ROOT = 'client_media'
 MEDIA_URL = '/media/'
+STATICFILES_DIR = os.path.join(BASE_DIR, 'static')
 STATIC_ROOT = 'static_media'
-STATIC_URL = os.environ.get('STATIC_URL', S3_URL)
+STATIC_URL = '/static/'
 TEMPLATE_DIRS = (os.path.join(DIRNAME, 'templates'))
 
 ROOT_URLCONF = 'hoard.urls'
@@ -62,7 +55,6 @@ INSTALLED_APPS = (
     'raven.contrib.django',
     'rest_framework',
     'rest_framework.authtoken',
-    'storages',
 
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -123,4 +115,3 @@ REST_FRAMEWORK = {
         'rest_framework.authentication.TokenAuthentication',
     )
 }
-
