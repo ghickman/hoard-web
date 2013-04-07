@@ -1,6 +1,36 @@
 {% extends "base.html" %}
 
 {% block content %}
-<h1>Welcome to Hoard</h1>
+<div class="hero-unit">
+    <h1>Hoard</h1>
+    <p>A central store for your environment variables.</p>
+</div>
+<div class="row">
+    <div class="span4">
+        <h3>Install Client</h3>
+        <pre>brew install hoard</pre>
+    </div>
+    <div class="span4">
+        <h3>List Projects</h3>
+        <pre>hoard projects --list</pre>
+    </div>
+    <div class="span4">
+        <h3>Set local project name</h3>
+        <pre>echo my_project > .hoard</pre>
+    </div>
+</div>
+<div class="row">
+    <div class="span4">
+        <h3>Get key/values</h3>
+        <pre>hoard get</pre>
+    </div>
+    <div class="span4">
+        <h3>Get for another env</h3>
+        <pre>hoard get --env live</pre>
+    </div>
+    <div class="span4">
+        <h3>Get for another project</h3>
+        <pre>hoard get --project other_project</pre>
+    </div>
+</div>
 {% endblock content %}
-
